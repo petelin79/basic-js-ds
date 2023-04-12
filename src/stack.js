@@ -17,9 +17,11 @@ class Stack {
   
   pop() {
     if (this.length < 0) return 
+    
     else {
-      let num = this[this.length - 1]
-      delete this[this.length - 1]
+
+      let num = this[this.length-1]
+      delete this[this.length-1]
       this.length--
 
       return num
@@ -27,13 +29,15 @@ class Stack {
   }
   
   push(el) {
-    if(!this.length) this.length = 0
-    this[this.length] = el
+    if(!this.length) this.length=0
+    this[this.length]=el
+
     this.length++;
   }
-  
+
   peek() {
-    return this[this.length - 1]
+
+    return this[this.length-1]
   }
 }
 
