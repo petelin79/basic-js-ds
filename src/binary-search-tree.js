@@ -1,6 +1,5 @@
 const { NotImplementedError } = require('../extensions/index.js');
-
-// const { Node } = require('../extensions/list-tree.js');
+const { Node } = require('../extensions/list-tree.js');
 
 /**
 * Implement simple binary search tree according to task description
@@ -8,39 +7,141 @@ const { NotImplementedError } = require('../extensions/index.js');
 */
 class BinarySearchTree {
 
+  constructor(){
+    this.obj = null
+  }
+
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+      // console.log(this.obj);
+    return this.obj
   }
 
-  add(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  add(data) {
+      const newNode = new Node(data);
+      if (!this.obj) {
+        this.obj = newNode;
+        return this;
+      };
+      let current = this.obj;
+  
+      const addSide = side => {
+        if (!current[side]) {
+          current[side] = newNode;
+          return this;
+        };
+        current = current[side];
+      };
+  
+      while (true) {
+        if (data === current.data) {
+          return this;
+        };
+        if (data < current.data) addSide('left');
+        else addSide('right');
+      };
+    };
+
+  has(data) {
+    if (!this.obj) return false;
+    let current = this.obj,
+        found = false;
+  
+    while (current && !found) {
+      if (data < current.data) current = current.left;
+      else if (data > current.data) current = current.right;
+      else found = true;
+    };
+    return found
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+    if (!this.obj) return null;
+    let current = this.obj,
+        found = false;
+  
+    while (current && !found) {
+      if (data < current.data) current = current.left;
+      else if (data > current.data) current = current.right;
+      else found = true;
+    };
+  
+    if (!found) return null;
+    return current;
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  leftPlusRight(source, item) {
+    if (!source) { return item }
+    if (!item) { return source }
+    if (source.right) {
+        return {
+            data: source.data,
+            left: source.left,
+            right: this.leftPlusRight(source.right, item) 
+        }
+    } else {
+        return {
+            data: source.data,
+            left: source.left,
+            right: item
+        }
+    }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    this.obj = delNode(this.obj, data)
+
+    function delNode(node, data) {
+      if (!node) return null
+      
+      if (data > node.data) {
+        node.right = delNode(node.right, data)
+        return node;
+      }
+      else if (data < node.data) {
+        node.left = delNode(node.left, data);
+        return node;
+      }
+      else {
+        if (!node.left && !node.right) return null
+
+        if (!node.left) {
+          node = node.right;
+          return node
+        }
+        if(!node.right) {
+          node = node.left;
+          return node
+        }
+
+        let maxLeft = node.left;
+        while (maxLeft.right) {
+          maxLeft = maxLeft.right
+        }
+
+        node.data = maxLeft.data
+        node.left = delNode(node.left, maxLeft.data)
+
+        return node
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    if (!this.obj) return null;
+    let current = this.obj
+    while (current.left) {
+        current = current.left;
+    }
+    return current.data
+}
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.obj) return null;
+    let current = this.obj
+    while (current.right) {
+        current = current.right;
+    }
+    return current.data
   }
 }
 
