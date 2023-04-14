@@ -69,23 +69,6 @@ class BinarySearchTree {
     return current;
   }
 
-  leftPlusRight(source, item) {
-    if (!source) { return item }
-    if (!item) { return source }
-    if (source.right) {
-        return {
-            data: source.data,
-            left: source.left,
-            right: this.leftPlusRight(source.right, item) 
-        }
-    } else {
-        return {
-            data: source.data,
-            left: source.left,
-            right: item
-        }
-    }
-  }
 
   remove(data) {
     this.obj = delNode(this.obj, data)

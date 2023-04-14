@@ -56,7 +56,7 @@ function removeKFromList(lst, key) {
   }
 
 
-  while (getPlace(key)     >= 0) {
+  while (getPlace(key) >= 0) {
     rem(getPlace(key))
   }
 
